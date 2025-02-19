@@ -1,67 +1,41 @@
-apiVersion: scaffolder.backstage.io/v1alpha1
+apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
-# some metadata about the template itself
 metadata:
-  name: v1beta3-demo
-  title: Test Action template
-  description: scaffolder v1beta3 template demo
+  name: my-template
+  title: "My First Template"
+  description: "A sample Backstage software template"
 spec:
-  owner: backstage/techdocs-core
+  owner: my-team
   type: service
 
-  # these are the steps which are rendered in the frontend with the form input
   parameters:
-    - title: Fill in some steps
+    - title: Fill in template details
       required:
-        - name
+        - projectName
       properties:
-        name:
-          title: Name
+        projectName:
+          title: Project Name
           type: string
-          description: Unique name of the component
-          ui:autofocus: true
-          ui:options:
-            rows: 5
-    - title: Choose a location
-      required:
-        - repoUrl
-      properties:
-        repoUrl:
-          title: Repository Location
-          type: string
-          ui:field: RepoUrlPicker
-          ui:options:
-            allowedHosts:
-              - github.com
+          description: "Enter the project name"
 
-  # here's the steps that are executed in series in the scaffolder backend
   steps:
-    - id: fetch-base
-      name: Fetch Base
+    - id: fetch
+      name: Fetch Skeleton
       action: fetch:template
       input:
-        url: ./template
-        values:
-          name: ${{ parameters.name }}
-
-    - id: fetch-docs
-      name: Fetch Docs
-      action: fetch:plain
-      input:
-        targetPath: ./community
-        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+        url: ./skeleton
+        targetPath: .
 
     - id: publish
-      name: Publish
+      name: Publish to GitHub
       action: publish:github
       input:
-        allowedHosts: ['github.com']
-        description: This is ${{ parameters.name }}
-        repoUrl: ${{ parameters.repoUrl }}
+        allowedHosts: ["github.com"]
+        repoUrl: github.com/my-org/{{ parameters.projectName }}
+        defaultBranch: main
+        description: "Generated from My Backstage Template"
 
-    - id: register
-      name: Register
-      action: catalog:register
-      input:
-        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
-        catalogInfoPath: '/catalog-info.yaml'
+  output:
+    links:
+      - title: "Repository"
+        url: "{{ steps.publish.output.remoteUrl }}"
