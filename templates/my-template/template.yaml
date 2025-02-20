@@ -24,7 +24,7 @@ spec:
       required:
         - repoUrl
       properties:
-        repoUrl: github.com?owner=SimonLehmeyer&repo=backstage-templates
+        repoUrl:
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
