@@ -2,8 +2,8 @@ apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
   name: v1beta3-demo
-  title: Test Action Template
-  description: scaffolder v1beta3 template demo
+  title: Test Template
+  description: scaffolder v1beta3 test template
 spec:
   owner: backstage/techdocs-core
   type: service
@@ -24,7 +24,7 @@ spec:
       required:
         - repoUrl
       properties:
-        repoUrl:
+        repoUrl: github.com?owner=SimonLehmeyer&repo=backstage-templates
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
@@ -46,7 +46,7 @@ spec:
       action: fetch:plain
       input:
         targetPath: ./community
-        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
+        url: https://raw.githubusercontent.com/backstage/community/main/backstage-community-sessions
 
     - id: publish
       name: Publish
