@@ -1,13 +1,15 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
+# some metadata about the template itself
 metadata:
   name: v1beta3-demo
-  title: Test Template
-  description: scaffolder v1beta3 test template
+  title: Test template
+  description: scaffolder v1beta3 template
 spec:
-  owner: backstage/techdocs-core
+  owner: team-01
   type: service
 
+  # these are the steps which are rendered in the frontend with the form input
   parameters:
     - title: Fill in some steps
       required:
@@ -24,7 +26,7 @@ spec:
       required:
         - repoUrl
       properties:
-        repoUrl: github.com?owner=SimonLehmeyer&repo=backstage-templates
+        repoUrl:
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
@@ -32,6 +34,7 @@ spec:
             allowedHosts:
               - github.com
 
+  # here's the steps that are executed in series in the scaffolder backend
   steps:
     - id: fetch-base
       name: Fetch Base
@@ -46,7 +49,7 @@ spec:
       action: fetch:plain
       input:
         targetPath: ./community
-        url: https://raw.githubusercontent.com/backstage/community/main/backstage-community-sessions
+        url: https://github.com/backstage/community/tree/main/backstage-community-sessions
 
     - id: publish
       name: Publish
@@ -60,5 +63,5 @@ spec:
       name: Register
       action: catalog:register
       input:
-        repoContentsUrl: https://raw.githubusercontent.com/SimonLehmeyer/backstage-templates/main/templates/my-template
+        repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
         catalogInfoPath: '/catalog-info.yaml'
