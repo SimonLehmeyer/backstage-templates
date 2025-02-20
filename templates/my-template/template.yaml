@@ -60,5 +60,5 @@ spec:
       name: Register
       action: catalog:register
       input:
-        repoContentsUrl: https://github.com/SimonLehmeyer/backstage/blob/templates
+        repoContentsUrl: https://github.com/SimonLehmeyer/backstage-templates/tree/main/templates/my-template
         catalogInfoPath: '/catalog-info.yaml'
