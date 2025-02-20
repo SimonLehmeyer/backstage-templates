@@ -5,7 +5,7 @@ metadata:
   title: Test Template
   description: scaffolder v1beta3 test template
 spec:
-  owner: team-01
+  owner: backstage/techdocs-core
   type: service
 
   parameters:
@@ -24,7 +24,7 @@ spec:
       required:
         - repoUrl
       properties:
-        repoUrl:
+        repoUrl: github.com?owner=SimonLehmeyer&repo=backstage-templates
           title: Repository Location
           type: string
           ui:field: RepoUrlPicker
